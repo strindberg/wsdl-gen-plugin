@@ -1,0 +1,22 @@
+plugins {
+  id "no.nils.wsdl2java" version "0.6"
+}
+
+ext.cxfVersion = '2.7.10'
+
+wsdl2java {
+    wsdlsToGenerate = [ ["$projectDir/src/main/resources/schemas/wsdl/HsaWsInteraction_3.18.wsdl"],
+        ["-xjc-XhashCode", "-xjc-Xequals", "-xjc-XtoString", "-xjc-Xinheritance",
+            "-xjc-b,${projectDir}/src/main/resources/jaxb-bindings.xjb", "-validate", "-verbose",
+            "-p", "urn:riv:hsa:HsaWs:3=se.inera.ifv.hsaws.v3",
+            "-p", "urn:riv:hsa:HsaWsResponder:3=se.inera.ifv.hsawsresponder.v3",
+            "-p", "http://www.w3.org/2005/08/addressing=org.w3.wsaddressing10"]  ]
+    generatedWsdlDir = file("build/generatedSource/java")
+    wsdlDir = file("$projectDir/src/main/resources/schemas/wsdl")
+    cxfVersion = project.cxfVersion
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
